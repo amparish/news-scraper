@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+        <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<title>News Scraper</title>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#Navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">News Scraper</a>
+                  </div>
+                  <div class="collapse navbar-collapse" id="Navbar">
+                    <ul class="nav navbar-nav navbar-right">
+                          <li><a href="#">Find New Articles</a></li>
+                          <li><a href="#">Your Saved Articles</a></li>
+                          <li><a href="#">Home</a></li>
+                    </ul>
+                  </div>
+            </div>
+        </nav>
+
+        <div class="jumbotron">
+            <div class="container">
+                <h1>News Scraper</h1>
+                <p>Scrapes news articles and album reviews from Pitchfork.</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Article Title</h3>
+                        </div>
+                        <div class="panel-body">
+                            <a href="#">Article Link</a>
+                            <form class="navbar-form navbar-right" method="POST" action="/saved/{{this.id}}?_method=PUT">
+                                <button type="submit" class="btn btn-danger" id="articleButton">View Comments</button>
+                            </form>
+                            <form class="navbar-form navbar-right" method="POST" action="/saved/{{this.id}}?_method=PUT">
+                                <button type="submit" class="btn btn-primary" id="articleButton">Save Article</button>
+                            </form>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+	</body>
+</html>
