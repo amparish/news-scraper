@@ -41,13 +41,14 @@
 
         <div class="container">
             <div class="col-md-12">
-                <div class="row">
+                <div class="row" id="articles">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Article Title</h3>
+                            <h3 class="panel-title">Title</h3>
                         </div>
                         <div class="panel-body">
-                            <a href="#">Article Link</a>
+                            <a href="#">Link</a>
+                            <br>
                             <form class="navbar-form navbar-right" method="POST" action="/saved/{{this.id}}?_method=PUT">
                                 <button type="submit" class="btn btn-danger" id="articleButton">View Comments</button>
                             </form>
