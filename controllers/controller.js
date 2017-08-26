@@ -8,11 +8,6 @@ var Comments = require("../models/Comments");
 
 // ROUTES
 
-// Renders index page
-app.get('/', function(req, res){
-	res.render('index');
-});
-
 // Renders saved articles page
 app.get('/saved', function(req, res){
 	res.render('saved');

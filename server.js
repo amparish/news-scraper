@@ -45,6 +45,11 @@ db.once("open", function(){
 	console.log("Mongoose connection successful");
 });
 
+// Renders index page
+app.get('/', function(req, res){
+	res.render('index');
+});
+
 app.listen(3000, function(){
-	console.log("Listening on port " + PORT)
+	console.log("Listening on port " + PORT);
 });
