@@ -3,14 +3,17 @@ $.getJSON("/articles", function(data) {
     // For each one
     for (var i = 0; i < data.length; i++) {
         // Display the apropos information on the page
-        $("#articles").append("<div data-id='" + data[i]._id + "' class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>" + data[i].title + "</h3></div><div class='panel-body'><a href='" + data[i].link + "'>" + data[i].link + "</a><br><form class='navbar-form navbar-right' method='POST' action='/saved/{{this.id}}?_method=PUT'><button type='submit' class='btn btn-danger' id='articleButton'>View Comments</button></form><form class='navbar-form navbar-right' method='POST' action='/saved/{{this.id}}?_method=PUT'><button type='submit' class='btn btn-primary' id='articleButton'>Save Article</button></form></div></div>");
+        $("#articles").append("<div data-id='" + data[i]._id +
+        "' class='panel panel-default'><div class='panel-heading'><h3 id='articleTitle' class='panel-title'>" + data[i].title +
+        "</h3></div><div class='panel-body'><a id='articleLink' href='" + data[i].link + "'>" + data[i].link +
+        "</a><br><button type='submit' class='btn btn-danger pull-right' id='commentButton'>View Comments</button><form class='navbar-form' method='POST' action='/saved/{{this.id}}?_method=PUT'><button type='submit' class='btn btn-primary pull-right' id='articleButton'>Save Article</button></form></div></div>");
     }
 });
 
-// Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+// User clicks a comment button
+$("#commentButton").on("click", function() {
     // Empty the notes from the note section
-    $("#notes").empty();
+    //$("#notes").empty();
     // Save the id from the p tag
     var thisId = $(this).attr("data-id");
     // Now make an ajax call for the Article
@@ -20,13 +23,13 @@ $(document).on("click", "p", function() {
     }).done(function(data) {
         console.log(data);
         // The title of the article
-        $("#notes").append("<h2>" + data.title + "</h2>");
+        $("#commentSection").append("<h2>" + data.title + "</h2>");
         // An input to enter a new title
-        $("#notes").append("<input id='titleinput' name='title' >");
+        $("#commentSection").append("<input id='titleinput' name='title'>");
         // A textarea to add a new note body
-        $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+        $("#commentSection").append("<textarea id='bodyinput' name='body'></textarea>");
         // A button to submit a new note, with the id of the article saved to it
-        $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+        $("#commentSection").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
         // If there's a note in the article
         if (data.note) {
           // Place the title of the note in the title input
@@ -37,19 +40,19 @@ $(document).on("click", "p", function() {
     });
 });
   
-// When you click the savenote button
-$(document).on("click", "#savenote", function() {
+// Save an article
+$("#saveButton").on("click", function() {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
         method: "POST",
-        url: "/articles/" + thisId,
+        url: "/saved/" + thisId,
         data: {
         // Value taken from title input
-            title: $("#titleinput").val(),
+            title: $("#articleTitle").val(),
         // Value taken from note textarea
-            body: $("#bodyinput").val()
+            link: $("#articleLink").val()
         }
     }).done(function(data) {
         // Log the response

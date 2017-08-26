@@ -41,35 +41,29 @@ app.get("/scrape", function(req, res){
 	res.redirect("/");
 });
 
-// This will get the articles we scraped from the mongoDB
+// Route to display scraped articles as JSON
 app.get("/articles", function(req, res) {
-	// Grab every doc in the Articles array
+	// Find all
 	Article.find({}, function(error, doc) {
-	  // Log any errors
 	  if (error) {
 			console.log(error);
-	  }
-	  // Or send the doc to the browser as a json object
-	  else {
+	  } else {
 			res.json(doc);
 	  }
 	});
 });
   
-// Grab an article by it's ObjectId
+// Displays single article (selected by ID) as JSON, with comments
 app.get("/articles/:id", function(req, res) {
 // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
 	Article.findOne({ "_id": req.params.id })
-// ..and populate all of the notes associated with it
+// and populate all of the comments associated with it
 	.populate("comments")
-// now, execute our query
 	.exec(function(error, doc) {
 	// Log any errors
 		if (error) {
 			console.log(error);
-		}
-	// Otherwise, send the doc to the browser as a json object
-		else {
+		} else {
 			res.json(doc);
 		}
 	});
