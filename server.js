@@ -27,11 +27,11 @@ var routes = require("./controllers/controller.js");
 app.use("/", routes);
 
 // Connect to Mongoose
-//if (process.env.MONGODB_URI) {
+if (process.env.MONGODB_URI) {
 	mongoose.connect("mongodb://heroku_7ckcb3gc:pc8tifg5od9ofgtcghn48kg86m@ds155587.mlab.com:55587/heroku_7ckcb3gc");
-//} else {
-	//mongoose.connect("mongodb://localhost/news-scraper");
-//}
+} else {
+	mongoose.connect("mongodb://localhost/news-scraper");
+}
 
 var db = mongoose.connection;
 

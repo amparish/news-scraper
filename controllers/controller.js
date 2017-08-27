@@ -10,17 +10,27 @@ var Comments = require("../models/Comments");
 
 // Renders index page
 app.get('/', function(req, res){
-	res.render('index');
+	Article.find({}, function(err, data) {
+		var hbsObject = {
+			article: data
+		};
+		res.render("index", hbsObject);
+	});
 });
 
 // Renders saved articles page
 app.get('/saved', function(req, res){
-	res.render('saved');
+	Article.find({}, function(err, data) {
+        var hbsObject = {
+        	article: data
+        };
+        res.render("saved", hbsObject);
+    });
 });
 
 // GET (scraper)
 app.get("/scrape", function(req, res){
-	request("https://www.pitchfork.com/", function(error, response, html){
+	request("https://www.pitchfork.com/latest", function(error, response, html){
 		var $ = cheerio.load(html);
 		$("h2.title").each(function(i, element){
 			var result = {};
@@ -72,27 +82,22 @@ app.get("/articles/:id", function(req, res) {
 });
   
   
-  // Create a new comment
+// Create a new comment
 app.post("/articles/:id", function(req, res) {
-	// Create a new comment and pass the req.body to the entry
-		var newComment = new Comment(req.body);
-		
-		// And save the new comment to the db
-		newComment.save(function(error, doc) {
-		// Log any errors
+	var newComment = new Comment(req.name, req.body);
+	console.log(newComment);
+	// Save comment to db
+	newComment.save(function(error, doc) {
 		if (error) {
 			console.log(error);
 		} else {
 		// Use the article id to find and update it's note
-			Article.findOneAndUpdate({ "_id": req.params.id }, { "comments": doc._id })
-		// Execute the above query
-			.exec(function(err, doc) {
-			// Log any errors
-				if (err) {
-					console.log(err);
+			Article.findOneAndUpdate({ "_id": req.params.id }, {$set: {"comment": doc._id}}, {new:true}, function(err, newdoc){
+				if (err){
+					console.log(error);
 				} else {
-			// Or send the document to the browser
-					res.send(doc);
+					console.log(newdoc);
+					res.send(newdoc);
 				}
 			});
 		}
@@ -106,8 +111,21 @@ app.get('/save/:id?', function (req, res) {
 
 	Article.findById(id, function (err, article) {
 		if (err) return handleError(err);
-		//set saved to 1(true)
-		article.saved = 1;
+		article.saved = true;
+		//save the update in mongoDB
+		article.save(function (err, updatedArticle) {
+			if (err) return handleError(err);
+			res.redirect("/saved");
+		});
+	});
+});
+
+// Delete saved article
+app.get('/delete/:id?', function (req, res) {
+	var id = req.params.id;
+	Article.findById(id, function (err, article) {
+		if (err) return handleError(err);
+		article.saved = false;
 		//save the update in mongoDB
 		article.save(function (err, updatedArticle) {
 			if (err) return handleError(err);
