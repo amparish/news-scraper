@@ -33,7 +33,6 @@ app.get("/scrape", function(req, res){
 			});
 		});
 	});
-	res.redirect("/");
 });
 
 // Route to display scraped articles as JSON
