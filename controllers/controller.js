@@ -8,6 +8,11 @@ var Comments = require("../models/Comments");
 
 // ROUTES
 
+// Renders index page
+app.get('/', function(req, res){
+	res.render('index');
+});
+
 // Renders saved articles page
 app.get('/saved', function(req, res){
 	res.render('saved');
@@ -23,6 +28,9 @@ app.get("/scrape", function(req, res){
 			result.title = $(this).text();
 
 			var entry = new Article(result);
+
+			// check for duplicate articles
+			Article.update({_id: entry._id}, {$addToSet: {title: entry.title}});
 
 			entry.save(function(err, doc){
 				if (err){
@@ -64,19 +72,19 @@ app.get("/articles/:id", function(req, res) {
 });
   
   
-  // Create a new note or replace an existing note
+  // Create a new comment
 app.post("/articles/:id", function(req, res) {
-	// Create a new note and pass the req.body to the entry
+	// Create a new comment and pass the req.body to the entry
 		var newComment = new Comment(req.body);
 		
-		// And save the new note the db
+		// And save the new comment to the db
 		newComment.save(function(error, doc) {
 		// Log any errors
 		if (error) {
 			console.log(error);
 		} else {
 		// Use the article id to find and update it's note
-			Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc._id })
+			Article.findOneAndUpdate({ "_id": req.params.id }, { "comments": doc._id })
 		// Execute the above query
 			.exec(function(err, doc) {
 			// Log any errors
@@ -88,6 +96,23 @@ app.post("/articles/:id", function(req, res) {
 				}
 			});
 		}
+	});
+});
+
+// Save an article
+app.get('/save/:id?', function (req, res) {
+	// Save the _id to a variable
+	var id = req.params.id;
+
+	Article.findById(id, function (err, article) {
+		if (err) return handleError(err);
+		//set saved to 1(true)
+		article.saved = 1;
+		//save the update in mongoDB
+		article.save(function (err, updatedArticle) {
+			if (err) return handleError(err);
+			res.redirect("/saved");
+		});
 	});
 });
 

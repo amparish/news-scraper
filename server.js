@@ -27,7 +27,11 @@ var routes = require("./controllers/controller.js");
 app.use("/", routes);
 
 // Connect to Mongoose
-mongoose.connect("mongodb://heroku_7ckcb3gc:pc8tifg5od9ofgtcghn48kg86m@ds155587.mlab.com:55587/heroku_7ckcb3gc");
+//if (process.env.MONGODB_URI) {
+	mongoose.connect("mongodb://heroku_7ckcb3gc:pc8tifg5od9ofgtcghn48kg86m@ds155587.mlab.com:55587/heroku_7ckcb3gc");
+//} else {
+	//mongoose.connect("mongodb://localhost/news-scraper");
+//}
 
 var db = mongoose.connection;
 
@@ -39,11 +43,6 @@ db.on("error", function(error){
 // log a success message once logged into db
 db.once("open", function(){
 	console.log("Mongoose connection successful");
-});
-
-// Renders index page
-app.get('/', function(req, res){
-	res.render('index');
 });
 
 app.listen(3000, function(){
