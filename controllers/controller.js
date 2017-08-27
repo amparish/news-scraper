@@ -4,7 +4,7 @@ var express = require("express");
 var app = express.Router();
 
 var Article = require("../models/Article");
-var Comments = require("../models/Comments");
+var Comment = require("../models/Comments");
 
 // ROUTES
 
@@ -84,7 +84,7 @@ app.get("/articles/:id", function(req, res) {
   
 // Create a new comment
 app.post("/articles/:id", function(req, res) {
-	var newComment = new Comment(req.name, req.body);
+	var newComment = new Comment(req.body);
 	console.log(newComment);
 	// Save comment to db
 	newComment.save(function(error, doc) {

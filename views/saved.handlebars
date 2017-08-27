@@ -75,9 +75,9 @@
                 {{#each comment}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <strong id='userName'>{{this.user}}</strong>
+                            <strong>{{this.user}}</strong>
                         </div>
-                        <div id='userComment' class="panel-body">{{this.body}}</div>
+                        <div class="panel-body">{{this.body}}</div>
                     </div>
                 {{/each}}
                 <form class="form-horizontal">
@@ -93,7 +93,7 @@
                             <textarea class="form-control" rows="5" id="comment"></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" id="submitComment">Submit</button>
                 </form>
             </div>
         </div>

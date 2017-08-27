@@ -1,9 +1,9 @@
 // User clicks a comment button
-$(document).on("click", "#commentButton", function() {
+/*$(document).on("click", "#commentButton", function() {
     // Empty the notes from the note section
     //$("#notes").empty();
-    // Save the id from the p tag
-    var thisId = $(this).attr("data-id");
+    // Save the id
+    var thisId = $(this).attr("data-value");
     // Now make an ajax call for the Article
     $.ajax({
       method: "GET",
@@ -26,27 +26,28 @@ $(document).on("click", "#commentButton", function() {
             $("#bodyinput").val(data.note.body);
         }
     });
-});
-  
+});*/
+
 // Save an article
-$(document).on("click", function() {
+$(document).on("click", "#submitComment", function() {
     // Grab the id associated with the article from the submit button
-    var thisId = $(this).attr("data-id");
+    var thisId = $(this).attr("data-value");
+    console.log(thisId);
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
         method: "POST",
-        url: "/saved/" + thisId,
+        url: "/articles/" + thisId,
         data: {
         // Value taken from title input
-            name: $("#userName").val(),
+            user: $("#usr").val(),
         // Value taken from note textarea
-            body: $("#userCommnet").val()
+            body: $("#comment").val()
         }
     }).done(function(data) {
         // Log the response
         console.log(data);
     });
-    // Also, remove the values entered in the input and textarea for note entry
+    // clears values entered in comment form
     //$("#usr").val("");
     //$("#comment").val("");
 });
