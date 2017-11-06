@@ -16,12 +16,7 @@ var ArticleSchema = new Schema({
   saved: {
     type: Boolean,
     default: 0
-  },
-  // ref refers to the Comment model
-  comments: [{
-    type: Schema.Types.ObjectId,
-    ref: "Comment"
-  }]
+  }
 });
 
 // Create the Article model with the ArticleSchema
