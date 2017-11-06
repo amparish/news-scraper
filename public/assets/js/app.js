@@ -33,6 +33,8 @@ $(document).on("click", "#submitComment", function() {
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-value");
     console.log(thisId);
+    // CURRENTLY LOGS AS UNDEFINED ON CLIENT SIDE //
+
     // Run a POST request to change the note, using what's entered in the inputs
     $.ajax({
         method: "POST",
@@ -46,9 +48,7 @@ $(document).on("click", "#submitComment", function() {
     }).done(function(data) {
         // Log the response
         console.log(data);
+        console.log("does this log?");
     });
-    // clears values entered in comment form
-    //$("#usr").val("");
-    //$("#comment").val("");
 });
   

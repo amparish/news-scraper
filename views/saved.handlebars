@@ -37,7 +37,7 @@
                         <div class="panel-body">
                             <a id='articleLink' href="{{this.link}}">{{this.link}}</a>
                             <br>
-                            <button type="submit" class="btn btn-danger pull-right" data-toggle="modal" data-value="{{this._id}}" data-target="#commentModal" id="commentButton">View Comments</button>
+                            <button id="commentBtn" type="submit" class="btn btn-danger pull-right" data-toggle="modal" data-value="{{this._id}}" data-target="#commentModal" id="commentButton">View Comments</button>
                             <form class="navbar-form pull-right" action="/delete/{{this._id}}">
                                 <a href="/delete/{{this._id}}"><button type="button" class="btn btn-primary" id="deleteButton">Delete Article</button></a>
                             </form>

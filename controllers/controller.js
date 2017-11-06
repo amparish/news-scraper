@@ -86,18 +86,24 @@ app.get("/articles/:id", function(req, res) {
 app.post("/articles/:id", function(req, res) {
 	var newComment = new Comment(req.body);
 	console.log(newComment);
+	console.log("this works");
 	// Save comment to db
 	newComment.save(function(error, doc) {
 		if (error) {
 			console.log(error);
+			console.log("no error, goes to else");
 		} else {
 		// Use the article id to find and update it's note
-			Article.findOneAndUpdate({ "_id": req.params.id }, {$set: {"comment": doc._id}}, {new:true}, function(err, newdoc){
+			Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"comment": doc._id}}, {new:true, upsert: true})
+			.populate("comment")
+			.exec(function(err, newdoc){
 				if (err){
 					console.log(error);
+					console.log("this is what logs");
 				} else {
 					console.log(newdoc);
 					res.send(newdoc);
+					console.log("does not go to else");
 				}
 			});
 		}

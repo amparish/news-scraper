@@ -24,6 +24,10 @@ p {
     text-align: center;
 }
 
+#commentBtn {
+    margin-top: 8px;
+}
+
 @media only screen and (max-width: 768px) {
     .navbar-collapse {
         width: auto;
