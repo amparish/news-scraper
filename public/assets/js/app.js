@@ -31,8 +31,10 @@
 // Save an article
 $(document).on("click", "#submitComment", function() {
     // Grab the id associated with the article from the submit button
-    var thisId = $(this).attr("data-value");
+    var thisId = $("#commentBtn").attr("data-value");
+    console.log('\n\n\nthe ID is currently:');
     console.log(thisId);
+    alert(thisId)
     // CURRENTLY LOGS AS UNDEFINED ON CLIENT SIDE //
 
     // Run a POST request to change the note, using what's entered in the inputs
@@ -51,4 +53,3 @@ $(document).on("click", "#submitComment", function() {
         console.log("does this log?");
     });
 });
-  

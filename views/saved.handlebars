@@ -28,7 +28,7 @@
 <div class="container">
     <div class="col-md-12">
         <div class="row" id="savedArticles">
-            {{#each article}}
+            {{#each articles}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 id='articleTitle' class="panel-title">{{this.title}}</h3>
@@ -70,7 +70,7 @@
                 <h5 class="modal-title" id="commentModalTitle">Comments</h5>
             </div>
             <div class="modal-body" id="commentSection">
-                {{#each comment}}
+                {{#each comments}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <strong>{{this.user}}</strong>

@@ -16,6 +16,10 @@ var ArticleSchema = new Schema({
   saved: {
     type: Boolean,
     default: 0
+  },
+  // https://stackoverflow.com/questions/30042533/cannot-push-item-into-array-with-mongoose
+  comment: {
+      type: Array
   }
 });
 

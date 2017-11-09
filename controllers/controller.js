@@ -12,7 +12,7 @@ function printAll() {
       if (error) {
             console.log(error);
       } else {
-		console.log('inside printAll');
+        console.log('inside printAll');
         console.log(doc);
       }
     });
@@ -32,11 +32,19 @@ app.get('/', function(req, res){
 
 // Renders saved articles page
 app.get('/saved', function(req, res){
-    Article.find({}, function(err, data) {
-        var hbsObject = {
-            article: data
-        };
-        res.render("saved", hbsObject);
+    Article.find({}, function(err, articles) {
+        // var hbsObject = {
+        //     article: data
+        // };
+        // res.render("saved", hbsObject);
+        Comment.find({}, function(err, comments) {
+            var hbsObject = {
+                comments: comments,
+                articles: articles
+            };
+			console.log(hbsObject);
+            res.render("saved", hbsObject);
+        })
     });
 });
 
@@ -113,7 +121,8 @@ app.post("/articles/:id", function(req, res) {
             // no error here
         } else {
         // Use the article id to find and update it's note
-            Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {"comment": doc._id}}, {new:true, upsert: true})
+            console.log("\n\ndoc._id: " + doc._id);
+            Article.findOneAndUpdate({ "_id": req.params.id }, {$push: {comment: doc._id}}, {new: true, upsert: true})
             .populate("comment")
             .exec(function(err, newdoc){
                 if (err){
